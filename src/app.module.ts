@@ -24,7 +24,7 @@ import configuration from './config/configuration';
         password: configService.get('database.password'),
         database: configService.get('database.database'),
         entities: [User],
-        synchronize: true, // Set to false in production
+        synchronize: configService.get('NODE_ENV') !== 'production',
         logging: configService.get('NODE_ENV') === 'development',
       }),
       inject: [ConfigService],
