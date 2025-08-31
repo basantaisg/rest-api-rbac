@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, ClassSerializerInterceptor } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { envConfig } from './config/env.config';
 
@@ -8,6 +9,9 @@ async function bootstrap() {
 
   // Enable CORS
   app.enableCors();
+
+  // Global serialization to honor @Exclude and friends
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
   // Global validation pipe
   app.useGlobalPipes(

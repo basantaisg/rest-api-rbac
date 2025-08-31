@@ -5,7 +5,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BeforeInsert,
-  BeforeUpdate,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import * as bcrypt from 'bcryptjs';
@@ -50,7 +49,6 @@ export class User {
   updatedAt: Date;
 
   @BeforeInsert()
-  @BeforeUpdate()
   async hashPassword() {
     if (this.password) {
       this.password = await bcrypt.hash(this.password, 10);
